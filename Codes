@@ -1,39 +1,55 @@
 using System;
-using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace employeeworks
+namespace EmployeeTimeKeeping_Final_Project
 {
-    class program
+    internal class Program
     {
+        static void Greeting_Head() {
+            Console.WriteLine(" ");
+            Console.WriteLine("||================================||");
+            Console.WriteLine("|| REG. HOURS:   8:00 AM-5:00 PM  ||");
+            Console.WriteLine("||================================||");
+        }
+        static void Greeting_Body() {
+            Console.WriteLine("||================================||");
+            Console.WriteLine("|| MORE THAN 30 MINUTES IS LATE   ||");
+            Console.WriteLine("|| WITH MINUS 1 HOUR BREAK        ||");
+            Console.WriteLine("|| COMPANY HOURS  8:00 AM-5:00 PM ||");
+            Console.WriteLine("||================================||");
+        }
         static void Greeting_Function()
         {
-            Console.WriteLine("||===============================||");
-            Console.WriteLine("||  Good Moring, You're On Time  ||");
-            Console.WriteLine("||===============================||");
-        }
-        static void Late_Function(string AM_Period, int Hour_in, int Minute_in)
+            Console.WriteLine("||================================||");
+            Console.WriteLine("||  Good Moring, You're On Time   ||");
+            Console.WriteLine("||================================||");
+        }// GOODS
+        static void Late_Function(string AM, int hr1, int mn1)
         {
-            if (AM_Period == "AM")
+            if (AM == "AM")
             {
-                if (Hour_in >= 8)
+                if (hr1 > 8)
                 {
-                    if(Minute_in >= 30) 
+                    if (mn1 >= 1 )
                     {
-                    // ************ CONSTANT VALUE ************
-                    int inhrs = Hour_in* 60;
-                    int in_hrs = inhrs + Minute_in;
-                    //----------------Total Late----------------
-                    int BreakSubLate = in_hrs - 60;
-                    int Total_Late = BreakSubLate - 450;
-                    int L_H = Math.Abs(Total_Late / 60);
-                    int L_M = Math.Abs(Total_Late % 60);
-                    Console.WriteLine("||===============================||");
-                    Console.WriteLine("||      LATE     ||       " + "{0}:{1:D2}",L_H,L_M);
-                    Console.WriteLine("||===============================||");
+                        // ************ CONSTANT VALUE ************
+                        int inhrs = hr1 * 60;
+                        int in_hrs = inhrs + mn1;
+                        //----------------Total Late----------------
+                        int BreakSubLate = in_hrs - 60;
+                        int Total_Late = BreakSubLate - 450;
+                        int L_H = Math.Abs(Total_Late / 60);
+                        int L_M = Math.Abs(Total_Late % 60);
+                        Console.WriteLine("||===============================||");
+                        Console.WriteLine("||      LATE     ||       " + "{0}:{1:D2}", L_H, L_M);
+                        Console.WriteLine("||===============================||");
                     }
                 }
                 // 12 AM Condtion
-                else if (Hour_in == 12 && AM_Period == "AM")
+                else if (hr1 == 12 && AM == "AM")
                 {
                     Greeting_Function();
                 }
@@ -42,8 +58,8 @@ namespace employeeworks
             else
             {
                 // ************ CONSTANT VALUE ************
-                int inhrs = Hour_in * 60;
-                int in_hrs = inhrs + Minute_in;
+                int inhrs = hr1 * 60;
+                int in_hrs = inhrs + mn1;
                 //----------------Total Late----------------
                 int BreakSubLate = in_hrs - 60;
                 int Total_Late = BreakSubLate - 450;
@@ -53,113 +69,226 @@ namespace employeeworks
                 Console.WriteLine("||      LATE     ||       " + "{0}:{1:D2}", L_H, L_M);
                 Console.WriteLine("||===============================||");
             }
-        }
-    // ******************************************* MAIN *****************************************************
-    static void Main(string[] args) 
+        }// GOODS
+        static void TotalQuata(int hr1, int hr2, int mn1, int mn2) 
         {
-            Console.WriteLine("||===============================||");
-            Console.WriteLine("||     EMPLOYEE TIME KEEPING     ||");
-            Console.WriteLine("||===============================||");
-            // START TIME
-            Console.Write("||    TIME IN     :    ");
-            int in_time = Convert.ToInt32(Console.ReadLine());
-            Console.Write("||    MINUTES     :    ");
-            int in_minutes = Convert.ToInt32(Console.ReadLine());
-            Console.Write("||    AM or PM    :    ");
-            String AMinPM = Console.ReadLine();
-
-            // LATE CONDITION
-            if (AMinPM == "AM")
-                {
-                    if (in_time >= 9)
-                    {
-                        if (in_minutes > -1){ Late_Function(AMinPM, in_time,in_minutes); }
-                        else{ Greeting_Function(); }
-                    }
-                    else if (in_time <= 8) 
-                    {
-                            if (in_minutes <= 30) { Greeting_Function(); } 
-                        else { Late_Function(AMinPM, in_time, in_minutes); }
-                    } 
-                    else if (in_time == 12 && AMinPM == "AM") 
-                    { Greeting_Function(); }
-                } else { Late_Function(AMinPM, in_time, in_minutes); }
-
-            // END TIME
-            Console.Write("||    TIME OUT    :    ");
-            int out_time = Convert.ToInt32(Console.ReadLine());
-            Console.Write("||    MINUTES     :    ");
-            int out_minutes = Convert.ToInt32(Console.ReadLine());
-            Console.Write("||    AM or PM    :    ");
-            String AMoutPM = Console.ReadLine();
-            // OVERTIME CONDTION
-            /*if (AMinPM == "AM")
+            int ui1 = hr1*60;
+            int uii = hr2 + 12;
+            int ui2 = uii * 60;
+            int m1 = ui1 + mn1;
+            int m2 = ui2 + mn2 - 60;
+            int tt = m2 - m1;
+            int ch = Math.Abs(tt/60);
+            int cm = Math.Abs(tt%60);
+            Console.WriteLine("||********************************||");
+            Console.WriteLine("||      PERIOD   ||     " + "{0}:{1:D2}", ch, cm);
+            Console.WriteLine("||********************************||");
+        }// GOODS
+        static void TotalOvertime(int hr1, int hr2, int mn2) 
+        {
+            int MTU1 = hr2 + 12;
+            if (MTU1 > 17) 
             {
-                if (AMoutPM == "PM")
-                {
-                    if (out_time >= 6 && in_time <= 8)
-                    {
-                        Console.WriteLine("||===============================||");
-                        Console.WriteLine("||    OVERTIME   ||              ||");
-                        Console.WriteLine("||===============================||");
-                    }
-
-                    else if (out_time == 5 && in_time <= 8 || in_minutes >= 0)
-                    {
-
-                    }
-                }
-            }*/
-            // UNDERTIME CONDITION
-            if (out_time <= 4 && AMoutPM =="PM")
+                int cv = 1020;
+                int ui2 = MTU1 *60;
+                int a_m = ui2 + mn2;
+                int tt = a_m-cv;
+                int ch = Math.Abs(tt/60);
+                int cm = Math.Abs(tt%60);
+                Console.WriteLine("||===============================||");
+                Console.WriteLine("||     OVERTIME  ||       " + "{0}:{1:D2}", ch, cm);
+                Console.WriteLine("||===============================||");
+            } else if (MTU1 < 17)
             {
-                int Input1 = out_time + 12;
-                int Input2 = in_time;
-                int SOLVE1 = Input1 - Input2;
-                int solve = SOLVE1* 60;
-                int minutes = in_minutes + out_minutes;
-                int total1 = solve + minutes;
-                int total = total1 - 480;
-                int conh = Math.Abs(total / 60);
-                int conm = Math.Abs(total % 60);
-                Console.WriteLine("||===============================||");
-                Console.WriteLine("||    UNDERTIME1  ||      " + "{0}:{1:D2}", conh, conm);
-                Console.WriteLine("||===============================||");
+                Console.WriteLine("||================================||");
+                Console.WriteLine("|| EARLY!, NO OVERTIME HAVE FUN!! ||");
+                Console.WriteLine("||================================||");
             }
-            else if (in_time >= 9 && in_minutes >= 0 && AMinPM == "AM")
+        } // GOODS
+        static void TotalUndertime(string AM, int hr1,int hr2,int mn1, int mn2 )
+        {
+            int newval = hr2 + 12;
+            int ui1 = hr1 * 60;
+            int uii = newval;
+            int ui2 = uii * 60;
+            int m1 = ui1 + mn1;
+            int m2 = ui2 + mn2 - 60;
+            int tt = m2 - m1;
+            if (tt < 480)
             {
-                int Input1 = out_time;
-                int Input2 = in_time;
-                int solve1 = Input1 - Input2 - 1;
-                int solve = solve1* 60;
-                int minutes = in_minutes + out_minutes;
-                int totalm = solve + minutes;
-                int total = totalm - 480;
-                int conh =  Math.Abs(total / 60);
-                int conm = Math.Abs(total % 60);
-                Console.WriteLine("||===============================||");
-                Console.WriteLine("||    UNDERTIME2  ||      " + "{0}:{1:D2}", conh, conm);
-                Console.WriteLine("||===============================||");
-            } else
+                int cv = 1020;
+                int ui22 = newval * 60;
+                int a_m = ui22 + mn2;
+                int ttt = a_m - cv;
+                int ch = Math.Abs(ttt / 60);
+                int cm = Math.Abs(ttt % 60);
+                Console.WriteLine("||********************************||");
+                Console.WriteLine("||   UNDERTIME   ||     " + "{0}:{1:D2}", ch, cm);
+                Console.WriteLine("||********************************||");
+            }
+            else
             {
-                int INPUT = in_time;
-                int INPUT2 = out_time;
-                int MIN = in_minutes;
-                int MIN2 = out_minutes;
-                int UserIn = INPUT * 60;
-                int UserOut = INPUT2 + 12;
-                int ToMin = UserOut * 60;
-                int Sub = ToMin - 60;
-                int InTotal = Sub - INPUT;
-                int MinTotal = MIN + MIN2;
-                int Total = InTotal + MinTotal;
-                int ConM = Math.Abs(Total % 60);
-                int ConH = Math.Abs(Total / 60);
-                Console.WriteLine("||===============================||");
-                Console.WriteLine("||    REGULAR HR. ||      " + "{0}:{1:D2}", ConH, ConM);
-                Console.WriteLine("||===============================||");
+                if (tt > 480)
+                {
+                    Console.WriteLine("||===============================||");
+                    Console.WriteLine("||  You Don't Have UnderTime     ||");
+                    Console.WriteLine("||===============================||");
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            Greeting_Body();
+            Console.WriteLine("||           USER TIME IN         ||");
+            Console.WriteLine("||================================||");
+            Console.Write("||     START TIME: ");
+                int H1 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("||     MINUTES: ");
+                int M1 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("||     AM or PM: ");
+                string T1 = Console.ReadLine();
+            Console.WriteLine("||     TIME STARTED: "+H1+":"+M1+" "+T1);
+            // Tate Time
+            Late_Function(T1, H1, M1);
+            Console.WriteLine("||================================||");
+            Console.WriteLine("||          USER TIME OUT         ||");
+            Console.WriteLine("||================================||");
+            Console.Write("||     END TIME: ");
+                int H2 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("||     MINNUTES: ");
+                int M2 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("||     AM or PM: ");
+                string T2 = Console.ReadLine();
+            Console.WriteLine("||     TIME Ended: " + H2 + ":" + M2 + " "+T2);
+
+            if (T1 == "AM") 
+            {
+                switch (H1)
+                {
+                    case 1:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1,H2,M1,M2);
+                        // Overtime
+                        TotalOvertime(H1,H2,M2);
+                        // Undertime
+                        TotalUndertime(T1,H1,H2,M1,M2);
+                        break;
+                    case 2:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime;
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                    case 3:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                    case 4:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                    case 5:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                    case 6:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                    case 7:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                    case 8:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                    case 9:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                    case 10:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                    case 11:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                    case 12:
+                        // Regular Time
+                        Greeting_Head();
+                        // Total Hours
+                        TotalQuata(H1, H2, M1, M2);
+                        // Overtime
+                        TotalOvertime(H1, H2, M2);
+                        // Undertime
+                        TotalUndertime(T1, H1, H2, M1, M2);
+                        break;
+                }
             }
             Console.ReadKey();
-            }
+           
         }
-    } 
+    }
+}
