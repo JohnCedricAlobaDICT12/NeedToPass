@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeTimeKeeping_Comprog3Finals", "EmployeeTimeKeeping_Comprog3Finals.csproj", "{032B6EA2-C310-4693-BB01-A518D7FA71B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{032B6EA2-C310-4693-BB01-A518D7FA71B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{032B6EA2-C310-4693-BB01-A518D7FA71B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{032B6EA2-C310-4693-BB01-A518D7FA71B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{032B6EA2-C310-4693-BB01-A518D7FA71B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32AED7A0-6BD1-40EA-AEBF-0B25E313DBC5}
+	EndGlobalSection
+EndGlobal
