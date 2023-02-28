@@ -1,0 +1,165 @@
+using System;
+using System.Threading;
+
+namespace employeeworks
+{
+    class program
+    {
+        static void Greeting_Function()
+        {
+            Console.WriteLine("||===============================||");
+            Console.WriteLine("||  Good Moring, You're On Time  ||");
+            Console.WriteLine("||===============================||");
+        }
+        static void Late_Function(string AM_Period, int Hour_in, int Minute_in)
+        {
+            if (AM_Period == "AM")
+            {
+                if (Hour_in >= 8)
+                {
+                    if(Minute_in >= 30) 
+                    {
+                    // ************ CONSTANT VALUE ************
+                    int inhrs = Hour_in* 60;
+                    int in_hrs = inhrs + Minute_in;
+                    //----------------Total Late----------------
+                    int BreakSubLate = in_hrs - 60;
+                    int Total_Late = BreakSubLate - 450;
+                    int L_H = Math.Abs(Total_Late / 60);
+                    int L_M = Math.Abs(Total_Late % 60);
+                    Console.WriteLine("||===============================||");
+                    Console.WriteLine("||      LATE     ||       " + "{0}:{1:D2}",L_H,L_M);
+                    Console.WriteLine("||===============================||");
+                    }
+                }
+                // 12 AM Condtion
+                else if (Hour_in == 12 && AM_Period == "AM")
+                {
+                    Greeting_Function();
+                }
+                else { Greeting_Function(); }
+            }
+            else
+            {
+                // ************ CONSTANT VALUE ************
+                int inhrs = Hour_in * 60;
+                int in_hrs = inhrs + Minute_in;
+                //----------------Total Late----------------
+                int BreakSubLate = in_hrs - 60;
+                int Total_Late = BreakSubLate - 450;
+                int L_H = Math.Abs(Total_Late / 60);
+                int L_M = Math.Abs(Total_Late % 60);
+                Console.WriteLine("||===============================||");
+                Console.WriteLine("||      LATE     ||       " + "{0}:{1:D2}", L_H, L_M);
+                Console.WriteLine("||===============================||");
+            }
+        }
+    // ******************************************* MAIN *****************************************************
+    static void Main(string[] args) 
+        {
+            Console.WriteLine("||===============================||");
+            Console.WriteLine("||     EMPLOYEE TIME KEEPING     ||");
+            Console.WriteLine("||===============================||");
+            // START TIME
+            Console.Write("||    TIME IN     :    ");
+            int in_time = Convert.ToInt32(Console.ReadLine());
+            Console.Write("||    MINUTES     :    ");
+            int in_minutes = Convert.ToInt32(Console.ReadLine());
+            Console.Write("||    AM or PM    :    ");
+            String AMinPM = Console.ReadLine();
+
+            // LATE CONDITION
+            if (AMinPM == "AM")
+                {
+                    if (in_time >= 9)
+                    {
+                        if (in_minutes > -1){ Late_Function(AMinPM, in_time,in_minutes); }
+                        else{ Greeting_Function(); }
+                    }
+                    else if (in_time <= 8) 
+                    {
+                            if (in_minutes <= 30) { Greeting_Function(); } 
+                        else { Late_Function(AMinPM, in_time, in_minutes); }
+                    } 
+                    else if (in_time == 12 && AMinPM == "AM") 
+                    { Greeting_Function(); }
+                } else { Late_Function(AMinPM, in_time, in_minutes); }
+
+            // END TIME
+            Console.Write("||    TIME OUT    :    ");
+            int out_time = Convert.ToInt32(Console.ReadLine());
+            Console.Write("||    MINUTES     :    ");
+            int out_minutes = Convert.ToInt32(Console.ReadLine());
+            Console.Write("||    AM or PM    :    ");
+            String AMoutPM = Console.ReadLine();
+            // OVERTIME CONDTION
+            /*if (AMinPM == "AM")
+            {
+                if (AMoutPM == "PM")
+                {
+                    if (out_time >= 6 && in_time <= 8)
+                    {
+                        Console.WriteLine("||===============================||");
+                        Console.WriteLine("||    OVERTIME   ||              ||");
+                        Console.WriteLine("||===============================||");
+                    }
+
+                    else if (out_time == 5 && in_time <= 8 || in_minutes >= 0)
+                    {
+
+                    }
+                }
+            }*/
+            // UNDERTIME CONDITION
+            if (out_time <= 4 && AMoutPM =="PM")
+            {
+                int Input1 = out_time + 12;
+                int Input2 = in_time;
+                int SOLVE1 = Input1 - Input2;
+                int solve = SOLVE1* 60;
+                int minutes = in_minutes + out_minutes;
+                int total1 = solve + minutes;
+                int total = total1 - 480;
+                int conh = Math.Abs(total / 60);
+                int conm = Math.Abs(total % 60);
+                Console.WriteLine("||===============================||");
+                Console.WriteLine("||    UNDERTIME1  ||      " + "{0}:{1:D2}", conh, conm);
+                Console.WriteLine("||===============================||");
+            }
+            else if (in_time >= 9 && in_minutes >= 0 && AMinPM == "AM")
+            {
+                int Input1 = out_time;
+                int Input2 = in_time;
+                int solve1 = Input1 - Input2 - 1;
+                int solve = solve1* 60;
+                int minutes = in_minutes + out_minutes;
+                int totalm = solve + minutes;
+                int total = totalm - 480;
+                int conh =  Math.Abs(total / 60);
+                int conm = Math.Abs(total % 60);
+                Console.WriteLine("||===============================||");
+                Console.WriteLine("||    UNDERTIME2  ||      " + "{0}:{1:D2}", conh, conm);
+                Console.WriteLine("||===============================||");
+            } else
+            {
+                int INPUT = in_time;
+                int INPUT2 = out_time;
+                int MIN = in_minutes;
+                int MIN2 = out_minutes;
+                int UserIn = INPUT * 60;
+                int UserOut = INPUT2 + 12;
+                int ToMin = UserOut * 60;
+                int Sub = ToMin - 60;
+                int InTotal = Sub - INPUT;
+                int MinTotal = MIN + MIN2;
+                int Total = InTotal + MinTotal;
+                int ConM = Math.Abs(Total % 60);
+                int ConH = Math.Abs(Total / 60);
+                Console.WriteLine("||===============================||");
+                Console.WriteLine("||    REGULAR HR. ||      " + "{0}:{1:D2}", ConH, ConM);
+                Console.WriteLine("||===============================||");
+            }
+            Console.ReadKey();
+            }
+        }
+    } 
